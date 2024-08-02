@@ -1,0 +1,50 @@
+<mat-card class="centre-card">
+    <mat-card-content>
+        <div>
+            <form [formGroup]="postForm">
+                <mat-form-field appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>File</mat-label>
+                    <button type="button" mat-icon-button matPrefix (click)="f_input.click()">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                    <input matInput  readonly formControlName="fileName">
+                    <input type="file"  hidden #f_input (change)="selectFile($event)" accept="application/jpge">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Content</mat-label>
+                    <textarea matInput rows="5" formControlName="content"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>postedBy</mat-label>
+                    <input matInput formControlName="postedBy">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Tags</mat-label>
+                    <mat-chip-grid #chipGrid aria-label="Enter tags">
+                        <mat-chip-row *ngFor="let tag of tags; let i =index" (removed)="remove(tag)">
+                            {{tag}}
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+
+                        <input placeholder="New tag"
+                        [matChipInputFor]="chipGrid"
+                        (matChipInputTokenEnd)="add($event)"/>
+                    </mat-chip-grid>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" style="float: right;"
+                 (click)="createPost()">created New Post</button>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
